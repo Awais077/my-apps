@@ -1,0 +1,11 @@
+{
+  "name": "my-apps",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Jack ki apni apps — HTML likho, GitHub cloud pe APK banega",
+  "dependencies": {
+    "@capacitor/android": "7.6.9",
+    "@capacitor/cli": "7.6.9",
+    "@capacitor/core": "7.6.9"
+  }
+}
