@@ -120,151 +120,151 @@
             padding-left: 30px;
         }
     </style>
-  </head>
-  <body>
+</head>
+<body>
 
-      <div class="calculator">
-          <div class="display-container">
-              <div class="previous-operand" id="previous-operand"></div>
-              <div class="current-operand" id="current-operand">0</div>
-          </div>
-          <div class="buttons-grid">
-              <button class="btn-light" onclick="clearDisplay()">AC</button>
-              <button class="btn-light" onclick="deleteNumber()">⌫</button>
-              <button class="btn-light" onclick="appendNumber('%')">%</button>
-              <button class="btn-operator" onclick="appendOperator('/')">÷</button>
-              
-              <button onclick="appendNumber('7')">7</button>
-              <button onclick="appendNumber('8')">8</button>
-              <button onclick="appendNumber('9')">9</button>
-              <button class="btn-operator" onclick="appendOperator('*')">×</button>
-              
-              <button onclick="appendNumber('4')">4</button>
-              <button onclick="appendNumber('5')">5</button>
-              <button onclick="appendNumber('6')">6</button>
-              <button class="btn-operator" onclick="appendOperator('-')">-</button>
-              
-              <button onclick="appendNumber('1')">1</button>
-              <button onclick="appendNumber('2')">2</button>
-              <button onclick="appendNumber('3')">3</button>
-              <button class="btn-operator" onclick="appendOperator('+')">+</button>
-              
-              <button class="btn-zero" onclick="appendNumber('0')">0</button>
-              <button onclick="appendNumber('.')">.</button>
-              <button class="btn-operator" onclick="compute()">=</button>
-          </div>
-      </div>
+    <div class="calculator">
+        <div class="display-container">
+            <div class="previous-operand" id="previous-operand"></div>
+            <div class="current-operand" id="current-operand">0</div>
+        </div>
+        <div class="buttons-grid">
+            <button class="btn-light" onclick="clearDisplay()">AC</button>
+            <button class="btn-light" onclick="deleteNumber()">⌫</button>
+            <button class="btn-light" onclick="appendNumber('%')">%</button>
+            <button class="btn-operator" onclick="appendOperator('/')">÷</button>
 
-      <script>
-          const previousOperandElement = document.getElementById('previous-operand');
-          const currentOperandElement = document.getElementById('current-operand');
-          
-          let currentOperand = '0';
-          let previousOperand = '';
-          let operation = undefined;
-          let resetScreen = false;
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button class="btn-operator" onclick="appendOperator('*')">×</button>
 
-          function updateDisplay() {
-              currentOperandElement.innerText = formatNumber(currentOperand);
-              if (operation != null) {
-                  previousOperandElement.innerText = `${formatNumber(previousOperand)} ${operationDisplay(operation)}`;
-              } else {
-                  previousOperandElement.innerText = '';
-              }
-          }
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button class="btn-operator" onclick="appendOperator('-')">-</button>
 
-          function formatNumber(number) {
-              if (number === '') return '';
-              const stringNumber = number.toString();
-              if (stringNumber.includes('.')) {
-                  const parts = stringNumber.split('.');
-                  const integerDisplay = parseFloat(parts[0]).toLocaleString('en', { maximumFractionDigits: 0 });
-                  return `${integerDisplay}.${parts[1]}`;
-              } else {
-                  const floatNumber = parseFloat(stringNumber);
-                  if (isNaN(floatNumber)) return '';
-                  return floatNumber.toLocaleString('en', { maximumFractionDigits: 0 });
-              }
-          }
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button class="btn-operator" onclick="appendOperator('+')">+</button>
 
-          function operationDisplay(op) {
-              if (op === '/') return '÷';
-              if (op === '*') return '×';
-              return op;
-          }
+            <button class="btn-zero" onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button class="btn-operator" onclick="compute()">=</button>
+        </div>
+    </div>
 
-          function appendNumber(number) {
-              if (currentOperand === '0' || resetScreen) {
-                  currentOperand = number;
-                  resetScreen = false;
-              } else {
-                  if (number === '.' && currentOperand.includes('.')) return;
-                  currentOperand += number;
-              }
-              updateDisplay();
-          }
+    <script>
+        const previousOperandElement = document.getElementById('previous-operand');
+        const currentOperandElement = document.getElementById('current-operand');
 
-          function appendOperator(op) {
-              if (currentOperand === '') return;
-              if (previousOperand !== '') {
-                  compute();
-              }
-              operation = op;
-              previousOperand = currentOperand;
-              currentOperand = '';
-              updateDisplay();
-          }
+        let currentOperand = '0';
+        let previousOperand = '';
+        let operation = undefined;
+        let resetScreen = false;
 
-          function compute() {
-              let computation;
-              const prev = parseFloat(previousOperand);
-              const curr = parseFloat(currentOperand);
-              
-              if (isNaN(prev) || isNaN(curr)) return;
-              
-              switch (operation) {
-                  case '+':
-                      computation = prev + curr;
-                      break;
-                  case '-':
-                      computation = prev - curr;
-                      break;
-                  case '*':
-                      computation = prev * curr;
-                      break;
-                  case '/':
-                      computation = curr === 0 ? 'Error' : prev / curr;
-                      break;
-                  case '%':
-                      computation = prev % curr;
-                      break;
-                  default:
-                      return;
-              }
-              
-              currentOperand = computation.toString();
-              operation = undefined;
-              previousOperand = '';
-              resetScreen = true;
-              updateDisplay();
-          }
+        function updateDisplay() {
+            currentOperandElement.innerText = formatNumber(currentOperand);
+            if (operation != null) {
+                previousOperandElement.innerText = `${formatNumber(previousOperand)} ${operationDisplay(operation)}`;
+            } else {
+                previousOperandElement.innerText = '';
+            }
+        }
 
-          function clearDisplay() {
-              currentOperand = '0';
-              previousOperand = '';
-              operation = undefined;
-              updateDisplay();
-          }
+        function formatNumber(number) {
+            if (number === '') return '';
+            const stringNumber = number.toString();
+            if (stringNumber.includes('.')) {
+                const parts = stringNumber.split('.');
+                const integerDisplay = parseFloat(parts[0]).toLocaleString('en', { maximumFractionDigits: 0 });
+                return `${integerDisplay}.${parts[1]}`;
+            } else {
+                const floatNumber = parseFloat(stringNumber);
+                if (isNaN(floatNumber)) return '';
+                return floatNumber.toLocaleString('en', { maximumFractionDigits: 0 });
+            }
+        }
 
-          function deleteNumber() {
-              if (resetScreen) return;
-              if (currentOperand.length === 1 || (currentOperand.length === 2 && currentOperand.startsWith('-'))) {
-                  currentOperand = '0';
-              } else {
-                  currentOperand = currentOperand.slice(0, -1);
-              }
-              updateDisplay();
-          }
-      </script>
-  </body>
-  </html>
+        function operationDisplay(op) {
+            if (op === '/') return '÷';
+            if (op === '*') return '×';
+            return op;
+        }
+
+        function appendNumber(number) {
+            if (currentOperand === '0' || resetScreen) {
+                currentOperand = number;
+                resetScreen = false;
+            } else {
+                if (number === '.' && currentOperand.includes('.')) return;
+                currentOperand += number;
+            }
+            updateDisplay();
+        }
+
+        function appendOperator(op) {
+            if (currentOperand === '') return;
+            if (previousOperand !== '') {
+                compute();
+            }
+            operation = op;
+            previousOperand = currentOperand;
+            currentOperand = '';
+            updateDisplay();
+        }
+
+        function compute() {
+            let computation;
+            const prev = parseFloat(previousOperand);
+            const curr = parseFloat(currentOperand);
+
+            if (isNaN(prev) || isNaN(curr)) return;
+
+            switch (operation) {
+                case '+':
+                    computation = prev + curr;
+                    break;
+                case '-':
+                    computation = prev - curr;
+                    break;
+                case '*':
+                    computation = prev * curr;
+                    break;
+                case '/':
+                    computation = curr === 0 ? 'Error' : prev / curr;
+                    break;
+                case '%':
+                    computation = prev % curr;
+                    break;
+                default:
+                    return;
+            }
+
+            currentOperand = computation.toString();
+            operation = undefined;
+            previousOperand = '';
+            resetScreen = true;
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentOperand = '0';
+            previousOperand = '';
+            operation = undefined;
+            updateDisplay();
+        }
+
+        function deleteNumber() {
+            if (resetScreen) return;
+            if (currentOperand.length === 1 || (currentOperand.length === 2 && currentOperand.startsWith('-'))) {
+                currentOperand = '0';
+            } else {
+                currentOperand = currentOperand.slice(0, -1);
+            }
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
