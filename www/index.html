@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mera App</title>
+<style>
+body{font-family:sans-serif;text-align:center;padding:40px;background:#dcfce7}
+h1{color:#166534}
+button{background:#16a34a;color:#fff;border:0;padding:12px 24px;font-size:18px;border-radius:10px}
+</style>
+</head>
+<body>
+<h1>Mera Pehla App</h1>
+<p>Apna naam likho:</p>
+<input id="naam" placeholder="Naam">
+<br><br>
+<button onclick="salaam()">Salaam karo</button>
+<p id="jawab"></p>
+<script>
+function salaam(){
+  var n = document.getElementById("naam").value;
+  document.getElementById("jawab").innerText = "Salaam, " + n + "! Allah barkat de!";
+}
+</script>
+</body>
+</html>
