@@ -133,22 +133,22 @@
             <button class="btn-light" onclick="deleteNumber()">⌫</button>
             <button class="btn-light" onclick="appendNumber('%')">%</button>
             <button class="btn-operator" onclick="appendOperator('/')">÷</button>
-
+            
             <button onclick="appendNumber('7')">7</button>
             <button onclick="appendNumber('8')">8</button>
             <button onclick="appendNumber('9')">9</button>
             <button class="btn-operator" onclick="appendOperator('*')">×</button>
-
+            
             <button onclick="appendNumber('4')">4</button>
             <button onclick="appendNumber('5')">5</button>
             <button onclick="appendNumber('6')">6</button>
             <button class="btn-operator" onclick="appendOperator('-')">-</button>
-
+            
             <button onclick="appendNumber('1')">1</button>
             <button onclick="appendNumber('2')">2</button>
             <button onclick="appendNumber('3')">3</button>
             <button class="btn-operator" onclick="appendOperator('+')">+</button>
-
+            
             <button class="btn-zero" onclick="appendNumber('0')">0</button>
             <button onclick="appendNumber('.')">.</button>
             <button class="btn-operator" onclick="compute()">=</button>
@@ -158,7 +158,7 @@
     <script>
         const previousOperandElement = document.getElementById('previous-operand');
         const currentOperandElement = document.getElementById('current-operand');
-
+        
         let currentOperand = '0';
         let previousOperand = '';
         let operation = undefined;
@@ -219,9 +219,9 @@
             let computation;
             const prev = parseFloat(previousOperand);
             const curr = parseFloat(currentOperand);
-
+            
             if (isNaN(prev) || isNaN(curr)) return;
-
+            
             switch (operation) {
                 case '+':
                     computation = prev + curr;
@@ -241,7 +241,7 @@
                 default:
                     return;
             }
-
+            
             currentOperand = computation.toString();
             operation = undefined;
             previousOperand = '';
