@@ -1,11 +1,1 @@
-{
-  "name": "my-apps",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Jack ki apni apps — HTML likho, GitHub cloud pe APK banega",
-  "dependencies": {
-    "@capacitor/android": "7.6.9",
-    "@capacitor/cli": "7.6.9",
-    "@capacitor/core": "7.6.9"
-  }
-}
+{"dependencies":{"@capacitor/android":"7.6.9","@capacitor/app":"7.1.2","@capacitor/browser":"7.0.5","@capacitor/camera":"7.0.5","@capacitor/cli":"7.6.9","@capacitor/clipboard":"7.0.4","@capacitor/core":"7.6.9","@capacitor/device":"7.0.5","@capacitor/filesystem":"7.1.9","@capacitor/geolocation":"7.1.8","@capacitor/haptics":"7.0.5","@capacitor/local-notifications":"7.0.7","@capacitor/network":"7.0.4","@capacitor/preferences":"7.0.4","@capacitor/share":"7.0.4","@capacitor/synapse":"1.0.4"},"description":"Jack ki apni apps — HTML likho, GitHub cloud pe APK banega","name":"my-apps","private":true,"version":"1.0.0"}
