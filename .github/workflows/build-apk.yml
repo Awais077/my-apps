@@ -38,8 +38,50 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Copy plugin web bundles
+        run: |
+          mkdir -p www/plugins
+          cp node_modules/@capacitor/core/dist/capacitor.js www/capacitor.js
+          cp node_modules/@capacitor/camera/dist/plugin.js www/plugins/camera.js
+          cp node_modules/@capacitor/filesystem/dist/plugin.js www/plugins/filesystem.js
+          cp node_modules/@capacitor/local-notifications/dist/plugin.js www/plugins/local-notifications.js
+          cp node_modules/@capacitor/share/dist/plugin.js www/plugins/share.js
+          cp node_modules/@capacitor/geolocation/dist/plugin.js www/plugins/geolocation.js
+          cp node_modules/@capacitor/haptics/dist/plugin.js www/plugins/haptics.js
+          cp node_modules/@capacitor/clipboard/dist/plugin.js www/plugins/clipboard.js
+          cp node_modules/@capacitor/network/dist/plugin.js www/plugins/network.js
+          cp node_modules/@capacitor/preferences/dist/plugin.js www/plugins/preferences.js
+          cp node_modules/@capacitor/app/dist/plugin.js www/plugins/app.js
+          cp node_modules/@capacitor/device/dist/plugin.js www/plugins/device.js
+          cp node_modules/@capacitor/browser/dist/plugin.js www/plugins/browser.js
+          node -e "const fs=require('fs');let s=fs.readFileSync('node_modules/@capacitor/synapse/dist/synapse.mjs','utf8');const m=s.match(/export\s*\{\s*(\w+)\s+as\s+exposeSynapse\s*\}/);if(!m)throw new Error('synapse export not found');s=s.replace(/export\s*\{[^}]*\};?/,'');fs.writeFileSync('www/plugins/synapse.js',s+'\nwindow.synapse={exposeSynapse:'+m[1]+'};\n');"
+          ls -l www www/plugins
+
       - name: Add Android platform
         run: npx cap add android
+
+      - name: Add plugin permissions to AndroidManifest
+        run: |
+          python3 - <<'EOF'
+          import pathlib
+          p = pathlib.Path('android/app/src/main/AndroidManifest.xml')
+          s = p.read_text()
+          perms = [
+              'android.permission.CAMERA',
+              'android.permission.READ_MEDIA_IMAGES',
+              'android.permission.ACCESS_COARSE_LOCATION',
+              'android.permission.ACCESS_FINE_LOCATION',
+              'android.permission.VIBRATE',
+              'android.permission.POST_NOTIFICATIONS',
+              'android.permission.SCHEDULE_EXACT_ALARM',
+          ]
+          add = ''.join(f'    <uses-permission android:name="{x}" />\n' for x in perms if f'android:name="{x}"' not in s)
+          if add:
+              s = s.replace('</manifest>', add + '</manifest>')
+              p.write_text(s)
+          print('permissions added:' if add else 'all permissions already present')
+          print(add if add else '(none)')
+          EOF
 
       - name: Sync web assets
         run: npx cap sync android
